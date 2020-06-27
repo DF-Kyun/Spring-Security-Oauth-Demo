@@ -25,12 +25,15 @@ public class SecurityBrowserConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.requestMatchers().antMatchers("/oauth/**", "/login/**", "/logout/**")
+        http.formLogin()
+                .loginPage("/login.html")
+                .loginProcessingUrl("/authentication/form")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/oauth/**").authenticated()
+                .antMatchers("/oauth/**","/login.html").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll();
+                .csrf().disable();
     }
 
     @Override

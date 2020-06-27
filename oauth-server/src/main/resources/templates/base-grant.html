@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>确认授权页面</title>
+</head>
+<body>
+<div>
+    <section>
+        <p>是否授权：<span th:text="${session.authorizationRequest.clientId}">clientId</span></p>
+        <div class="ui-notice-btn">
+            <form id='confirmationForm' name='confirmationForm' action="/oauth/authorize" method='post'>
+                <input name='user_oauth_approval' value='true' type='hidden'/>
+                <!--写好授权访问领域-->
+                <input th:name="${s}" value="true" type='hidden' th:each="s : ${scopeList}"/>
+                <input name='authorize' value='授权' type='submit'/>
+            </form>
+            <form id="denialForm" name="denialForm" action="/oauth/authorize" method="post" style="margin-top: 15px;">
+                <input name="user_oauth_approval" value="false" type="hidden">
+                <label><input name="deny" value="拒绝" type="submit"></label>
+            </form>
+        </div>
+    </section>
+</div>
+</body>
+</html>
